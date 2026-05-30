@@ -16,6 +16,10 @@ public class Assinatura {
         this.pagamento = pagamento;
     }
 
+    public String getNomeProduto() {
+        return produto.getNome();
+    }
+
     public String gerarResumo() {
         return "Assinante: " + assinante.getNome() +
                 " | Celular: " + assinante.getCelular() +

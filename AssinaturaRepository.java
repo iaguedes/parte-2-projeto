@@ -9,7 +9,9 @@ public class AssinaturaRepository {
 
     public void salvar(Assinatura assinatura) {
         try {
-            FileWriter arquivo = new FileWriter("assinaturas.txt", true);
+            String nomeArquivo = gerarNomeArquivoPorProduto(assinatura.getNomeProduto());
+
+            FileWriter arquivo = new FileWriter(nomeArquivo, true);
             PrintWriter gravador = new PrintWriter(arquivo);
 
             gravador.println(assinatura.gerarResumo());
@@ -20,5 +22,18 @@ public class AssinaturaRepository {
         } catch (IOException e) {
             System.out.println("Erro ao salvar assinatura.");
         }
+    }
+
+    private String gerarNomeArquivoPorProduto(String nomeProduto) {
+        String produtoSemQuantidade = nomeProduto
+                .toLowerCase()
+                .trim()
+                .replaceAll("^[0-9]+\\s*", "");
+
+        String produtoFormatado = produtoSemQuantidade
+                .replaceAll("\\s+", "_")
+                .replaceAll("[^a-z0-9_áàâãéèêíïóôõöúçñ-]", "");
+
+        return "assinaturas_" + produtoFormatado + ".txt";
     }
 }

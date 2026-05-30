@@ -34,7 +34,17 @@ public class AssinaturaController {
 
     public void confirmarAssinatura(String nome, String celular) {
         Assinante assinante = new Assinante(nome, celular);
-        Assinatura assinatura = new Assinatura(assinante, plano, produto, endereco, pagamento);
-        repository.salvar(assinatura);
+
+        String[] produtosEscolhidos = produto.getNome().split(",");
+
+        for (String nomeProduto : produtosEscolhidos) {
+            nomeProduto = nomeProduto.trim();
+
+            if (!nomeProduto.isEmpty()) {
+                Produto produtoSeparado = new Produto(nomeProduto);
+                Assinatura assinatura = new Assinatura(assinante, plano, produtoSeparado, endereco, pagamento);
+                repository.salvar(assinatura);
+            }
+        }
     }
 }
